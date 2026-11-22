@@ -1,0 +1,113 @@
+/* Frost design tokens + site navigation.
+   Loaded once from app/layout.tsx so every page shares them. */
+
+:root {
+  --ink: #101621;
+  --paper: #fefeff;
+
+  --text-1: var(--ink);
+  --text-3: rgb(16 22 33 / 0.66);
+  --text-inverse: var(--paper);
+  --text-inverse-3: rgb(254 254 255 / 0.66);
+
+  --surface-page: var(--paper);
+  --surface-canvas: #fbfcfd;
+  --surface-card: #eff0f3;
+  --surface-selected: rgb(16 22 33 / 0.09);
+  --surface-inverse: var(--ink);
+  --surface-tag-on-image: rgb(16 22 33 / 0.72);
+  --line: rgb(16 22 33 / 0.14);
+
+  --site-wide: 1200px;
+}
+
+html.dark-mode {
+  --text-1: #f5f5f5;
+  --text-3: rgb(245 245 245 / 0.66);
+  --text-inverse: #111111;
+  --text-inverse-3: rgb(17 17 17 / 0.66);
+
+  --surface-page: #101010;
+  --surface-canvas: #161616;
+  --surface-card: #1c1c1c;
+  --surface-selected: rgb(255 255 255 / 0.1);
+  --surface-inverse: #f5f5f5;
+  --line: rgb(255 255 255 / 0.12);
+}
+
+/* ---------- Navigation (Figma: Home V3) ---------- */
+
+.topnav {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  z-index: 50;
+  width: min(var(--site-wide), calc(100% - 48px));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.topnav-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: auto;
+}
+
+.topnav-link,
+.topnav-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 31px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--surface-card);
+  color: var(--text-1);
+  font-family: var(--font-geist), 'Geist', sans-serif;
+  font-size: 18px;
+  line-height: 23px;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.topnav-link.is-contact {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.topnav-theme {
+  width: 31px;
+  padding: 0;
+}
+
+.topnav-link:focus-visible,
+.topnav-theme:focus-visible {
+  outline: 2px solid var(--text-1);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .topnav {
+    top: 16px;
+    width: calc(100% - 32px);
+  }
+
+  .topnav-link {
+    height: 28px;
+    padding: 3px 6px;
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  .topnav-theme {
+    width: 28px;
+    height: 28px;
+  }
+}
