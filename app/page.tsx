@@ -1,66 +1,169 @@
-
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
+import './home.css'
+
+/* Homepage, built from Figma: My Portfolio / Desktop - 7. */
+
+const EMAIL = 'prehandev@gmail.com'
+const CAL = 'https://cal.com/hirehan/remote-product-designer'
+
+const icons = {
+  linkedin: (
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M3.58214 16H0.264286V5.31786H3.58214V16ZM1.92143 3.86071C0.860714 3.86071 0 2.98214 0 1.92143C0 1.41071 0.203572 0.925 0.564286 0.564286C0.925 0.203572 1.41429 0 1.92143 0C2.42857 0 2.91786 0.203572 3.27857 0.564286C3.63929 0.925 3.84286 1.41429 3.84286 1.92143C3.84286 2.98214 2.98214 3.86071 1.92143 3.86071ZM15.9964 16H12.6857V10.8C12.6857 9.56071 12.6607 7.97143 10.9607 7.97143C9.23571 7.97143 8.97143 9.31786 8.97143 10.7107V16H5.65714V5.31786H8.83929V6.775H8.88571C9.32857 5.93571 10.4107 5.05 12.025 5.05C15.3821 5.05 16 7.26072 16 10.1321V16H15.9964Z" />
+    </svg>
+  ),
+  x: (
+    <svg viewBox="0 0 18 16" fill="currentColor" aria-hidden="true">
+      <path d="M13.9385 0H16.6538L10.7231 6.77692L17.7 16H12.2385L7.95769 10.4077L3.06538 16H0.346154L6.68846 8.75L0 0H5.6L9.46538 5.11154L13.9385 0ZM12.9846 14.3769H14.4885L4.78077 1.53846H3.16538L12.9846 14.3769Z" />
+    </svg>
+  ),
+  email: (
+    <svg viewBox="0 0 22 16" fill="currentColor" aria-hidden="true">
+      <path d="M2 0C0.895833 0 0 0.895833 0 2C0 2.62917 0.295833 3.22083 0.8 3.6L9.46667 10.1C10.1792 10.6333 11.1542 10.6333 11.8667 10.1L20.5333 3.6C21.0375 3.22083 21.3333 2.62917 21.3333 2C21.3333 0.895833 20.4375 0 19.3333 0H2ZM0 5.5V13.3333C0 14.8042 1.19583 16 2.66667 16H18.6667C20.1375 16 21.3333 14.8042 21.3333 13.3333V5.5L13.0667 11.7C11.6458 12.7667 9.6875 12.7667 8.26667 11.7L0 5.5Z" />
+    </svg>
+  ),
+  medium: (
+    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M13.1929 0C14.7429 0 16 1.25686 16 2.80652V5.79871C15.9321 5.79514 15.8643 5.79157 15.7964 5.79157H15.7821C15.425 5.79157 14.9857 5.87726 14.6714 6.03437C14.3143 6.19862 14.0036 6.44499 13.7429 6.76992C13.3214 7.29123 13.0679 7.99464 13.0071 8.78375C13.0036 8.80875 13.0036 8.83017 13 8.85517C12.9964 8.88016 12.9964 8.89801 12.9964 8.92301C12.9929 8.96586 12.9929 9.0087 12.9929 9.05155C12.9929 9.11939 12.9893 9.18724 12.9929 9.25865C13.0357 11.0475 14 12.4794 15.7179 12.4794C15.8143 12.4794 15.9071 12.4758 16 12.4651V13.1935C16 14.7431 14.7429 16 13.1929 16L2.80714 15.9964C1.25714 15.9964 0 14.7396 0 13.1899V2.80652C0 1.25686 1.25714 0 2.80714 0H13.1929ZM2.93929 3.81701L2.95 3.82058C3.42143 3.9277 3.65714 4.0848 3.65714 4.6561V11.3403C3.65714 11.9116 3.41786 12.0687 2.94643 12.1759L2.93571 12.1794V12.2794H4.82143V12.1794L4.81071 12.1759C4.33929 12.0687 4.1 11.9116 4.1 11.3403V5.0453L7.175 12.2758H7.35L10.5143 4.84178V11.5046C10.475 11.9545 10.2357 12.0937 9.81071 12.1901L9.8 12.1937V12.2901H13.0821V12.1937L13.0714 12.1901C12.6464 12.0937 12.4036 11.9545 12.3607 11.5046L12.3571 4.6561H12.3607C12.3607 4.0848 12.6 3.9277 13.0714 3.82058L13.0821 3.81701V3.7206H10.5036L8.11071 9.34077L5.71786 3.7206H2.93929V3.81701ZM16 11.0083C15.1036 10.744 14.4643 9.75497 14.5286 8.58737H15.9964V11.0083H16ZM15.7714 6.16648C15.8536 6.16648 15.9286 6.17719 16 6.19862V8.24816H14.5643C14.6179 7.04843 15.05 6.18076 15.7714 6.16648Z" />
+    </svg>
+  ),
+  resume: (
+    <svg viewBox="0 0 12 16" fill="currentColor" aria-hidden="true">
+      <path d="M2 0C0.896875 0 0 0.896875 0 2V14C0 15.1031 0.896875 16 2 16H10C11.1031 16 12 15.1031 12 14V5.32812C12 4.79688 11.7906 4.2875 11.4156 3.9125L8.08438 0.584375C7.70938 0.209375 7.20312 0 6.67188 0H2ZM10.1719 5.5H7.25C6.83437 5.5 6.5 5.16563 6.5 4.75V1.82812L10.1719 5.5Z" />
+    </svg>
+  ),
+}
+
+const socials = [
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/rehanpinjari', icon: icons.linkedin },
+  { label: 'X (Twitter)', href: 'https://x.com/RehanDesigns', icon: icons.x },
+  { label: 'Email', href: `mailto:${EMAIL}`, icon: icons.email },
+  { label: 'Medium', href: 'https://medium.com/@rehanpinjari', icon: icons.medium },
+  { label: 'Resume', href: '/resume', icon: icons.resume },
+]
+
+const testimonials = [
+  {
+    person: 'Sebastian Janus',
+    role: 'Founder & CEO at nugrow.de',
+    quote: "Page converts because it's clear. No noise. Rehan didn't redesign—he removed everything that didn't matter. That's it.",
+    photo: '/Client Sebastian Janus.png',
+    brand: '/CFO Icon.png',
+  },
+  {
+    person: 'Josh Golosinskiy',
+    role: 'CEO of GRYD.IO',
+    quote: 'Rehan got into the product fast. He worked through the protocol complexity, cleaned up the core flows, and made the whole thing easier to use without stripping out the mechanics.',
+    photo: '/Client Josh Golosinskiy.png',
+    brand: '/GRYD Icon.png',
+  },
+  {
+    person: 'Cristina Romanelli',
+    role: 'Co-founder at The Romanelli Group',
+    quote: "Rehan doesn't just design websites—he designs experiences. He got what The Romanelli Group is about before he touched Figma. The site doesn't just look premium; it converts. That's the difference between a designer and a partner.",
+    photo: '/Client Cristina Romanelli.png',
+    brand: '/The Romanelli Group Icon.png',
+  },
+  {
+    person: 'Neil Corke',
+    role: 'Operations Director at Falk',
+    quote: "Rehan took time to understand Falk before touching the design. He asked the right questions about our customers, our heritage, what actually matters in how we sell. The homepage he delivered is clean and purposeful—every section has a reason. That's exactly what we needed.",
+    photo: '/Client Neil Corke.png',
+    brand: '/Falk Icon.png',
+  },
+  {
+    person: 'Armand Poonawala',
+    role: 'Founder at OpenWork',
+    quote: 'Rehan got into the product fast. He worked through the protocol complexity, cleaned up the core flows, and made the whole thing easier to use without stripping out the mechanics.',
+    photo: '/Client Armand Poonawala.png',
+    brand: '/Openwork Icon.png',
+  },
+  {
+    person: 'Shushan Pambukhchyan',
+    role: 'Co-founder & CEO at SINOBI',
+    quote: "Rehan restructured our entire product page without redesigning it. Like, the layout stayed clean, the aesthetic stayed ours, but suddenly people understood what we were actually selling. That's not common.",
+    photo: '/Client Shushan Pambukhchyan.png',
+    brand: '/Sinobi Icon.png',
+  },
+]
+
+/* Real history, from app/resume/page.tsx. */
+const experience = [
+  {
+    org: 'Xvantage Infotech',
+    role: 'Product UX & UI Designer',
+    dates: '2024–Now',
+    line: 'Designed BookMyFarm and Byting Korner, from first sketch to developer handoff.',
+    logo: '/Xvantage Infotech.png',
+  },
+  {
+    org: 'Freelance',
+    role: 'Product UX & UI Designer',
+    dates: '2022–Now',
+    line: '40+ websites, apps and SaaS products for founders and startups.',
+    mark: 'F',
+  },
+  {
+    org: 'GTU',
+    role: 'B.E. Computer Science & Engineering',
+    dates: 'Degree',
+    line: 'Prime Institute of Engineering & Technology, Navsari.',
+    logo: '/GTU Logo.png',
+  },
+  {
+    org: 'GTU',
+    role: 'Diploma in Electrical Engineering',
+    dates: 'Diploma',
+    line: 'Government Polytechnic Navsari.',
+    logo: '/GTU Logo.png',
+  },
+]
 
 const projects = [
   {
     name: 'BookMyFarm',
     type: 'Farmhouse Marketplace',
-    title: 'Designed trust into a farmhouse booking app with 100K+ downloads.',
-    text: 'Designed BookMyFarm 0→1 for iOS and Android. It launched with no brand and no reviews, and guests were being asked to pay for farmhouses they’d never seen. I moved reviews above amenities, put stay videos on the home screen, added owner chat to the listing, and offered a deposit option. I also built its Figma design system: 18 components, variables, tokens.',
-    quote: "Rehan changed how we thought about the product. We started with 'we need a booking app' and ended up with a complete experience built around trust, availability, owners, and customers. He didn’t just design the screens—he helped us think through how the whole product should work together.",
-    person: 'Vipul Sapra',
-    role: 'Founder & CEO, BookMyFarm',
-    personImage: '/Client Vipul Sapra.png',
-    tags: ['App Design', 'Product Design', 'System Design'],
-    stats: [
-  { icon: 'fa-solid fa-download', text: '100K+ downloads', bg: '#E7F6EC', color: '#0E9F4E' },
-  { icon: 'fa-solid fa-star', text: '4.5★ rating, 353+ reviews', bg: '#FFF4D6', color: '#C4840A' },
-],
-    href: 'https://medium.com/@rehanpinjari/how-i-designed-trust-into-a-farmhouse-booking-app-100k-downloads-4-5-rating-b74b968cd3ca',
+    text: 'Designed the booking and trust experience for a 0→1 farmhouse marketplace launching without established brand recognition or customer reviews.',
+    tags: ['0→1 Product Design', 'Booking UX', 'Trust & Credibility', 'Marketplace UX'],
     image: '/BookMyFarm Thumbnail.png',
-    video: '/BookMyFarm Hero Case.mp4',
     logo: '/BookMyFarm Icon.svg',
+    darkLogo: false,
+    gallery: ['/cases/bookmyfarm-1.jpg', '/cases/bookmyfarm-2.jpg'],
+    href: 'https://medium.com/@rehanpinjari/how-i-designed-trust-into-a-farmhouse-booking-app-100k-downloads-4-5-rating-b74b968cd3ca',
   },
   {
     name: 'Byting Korner',
     type: 'Fast Food Franchise',
-  title: "Not a restaurant dashboard. A system where every role sees what its job needs.",
-  text: "Designed Byting Korner’s franchise operations platform in Figma: POS (cash, UPI, split payments), inventory, recipes, stock requests and reporting, for three access levels: Super Admin, Master Franchise and Outlet. Stock requests move through explicit states (asked, approved, sent, received) with a three-signature handoff, and recipes update inventory when an order completes.",
-    quote: "Rehan didn't just design a system. He designed the backbone that lets us scale without losing control. 50+ outlets across 10 cities, and every franchisee knows exactly what's happening—inventory, orders, revenue, real-time. That's how you grow without chaos."
-,
-  person: 'Ashish Doshi',
-  role: 'Founder & Director, Byting Korner',
-    personImage: '/BytingKorner Icon.png',
-  tags: ['Product Design', 'POS Design', 'System Design'],
-  stats: [
-  { icon: 'fa-solid fa-store', text: '50+ outlets · 10 cities', bg: '#FDE8E4', color: '#D3542C' },
-  { icon: 'fa-solid fa-location-dot', text: '3M+ consumers', bg: '#E7F0FF', color: '#245AEE' },
-],  href: 'https://medium.com/design-bootcamp/how-i-designed-an-org-chart-with-software-bd6650da4bfd',
+    text: 'A multi-role platform connecting restaurant orders, POS, inventory, recipe-based consumption, stock approvals, warehouse fulfilment and reporting across a franchise network.',
+    tags: ['Multi-role UX', 'POS & Inventory', 'Operational Workflows', 'Design Systems'],
     image: '/BytingKorner Thumbnail.png',
-    video: '/BytingKorner Hero Case.mp4',
     logo: '/BytingKorner Icon.png',
+    darkLogo: true,
+    gallery: ['/cases/bytingkorner-1.jpg', '/cases/bytingkorner-2.jpg'],
+    href: 'https://medium.com/design-bootcamp/how-i-designed-an-org-chart-with-software-bd6650da4bfd',
   },
   {
-  name: 'Mylaw',
-  type: 'Legal Tech SaaS',
-  title: 'Places in the sidebar, verbs on the workspace.',
-  text: 'A client’s review of duplicate menu items, and the rule it produced. I designed the navigation and core flows for the user and lawyer roles, including an AI intake step that shows users what it understood before matching them with a lawyer. Nothing was tested with users. The client approved eight screens.',
-  quote: 'Rehan was a pleasure to work with and he helped us in shaping MyLaw’s initial design. He was patient, flexible, and always receptive to feedback, consistently translating ideas and suggestions into strong design results.',
-  person: 'Annonymous',
-  role: 'CEO, MyLaw',
-  personImage: '/Client Karan Dhawan.png',
-  tags: ['Product Design', 'Navigation', 'NDA'],
-  stats: [
-    { icon: 'fa-solid fa-layer-group', text: '8 screens approved', bg: '#F4F4F4', color: '#111' },
-    { icon: 'fa-solid fa-code-branch', text: '2 roles, 1 shell', bg: '#F4F4F4', color: '#111' },
-  ],
-  href: 'https://rehanpinjari.medium.com/places-in-the-sidebar-verbs-on-the-workspace-781db754d1a8?postPublishedType=initial',
-  image: '/Olanur Cover.png',
-  video: '',
-  logo: '/MyLaw Logo.png',
-},
+    name: 'Confidential',
+    type: 'AI Legal Services Platform',
+    text: 'Worked on core navigation and client and lawyer workflows for an AI-assisted legal services platform, including AI-powered intake, problem refinement and lawyer matching.',
+    tags: ['AI-assisted UX', 'LegalTech SaaS', 'Intake & Triage', 'Multi-sided Workflows'],
+    image: '/Olanur Cover.png',
+    logo: '/MyLaw Logo.png',
+    darkLogo: false,
+    gallery: ['/cases/legaltech-1.jpg', '/cases/legaltech-2.jpg'],
+    href: 'https://rehanpinjari.medium.com/places-in-the-sidebar-verbs-on-the-workspace-781db754d1a8',
+  },
+]
+
+const stats = [
+  { value: '4', label: 'years in product design' },
+  { value: '100K+', label: 'downloads on BookMyFarm' },
+  { value: '4.5★', label: 'from 353+ reviews' },
+  { value: '300+', label: "bookings in BookMyFarm's launch window" },
+  { value: '16.7K+', label: 'followers on Medium' },
+  { value: '1300+', label: 'people get my writing by email' },
 ]
 
 const logos = [
@@ -72,444 +175,280 @@ const logos = [
   { name: 'Gryd.io', src: '/LogoWall/GRYD Wordmark.svg', line: 'Designed the full marketing site, mobile first, for a Jira and process consultancy.' },
   { name: 'Scene Seek', src: '/LogoWall/SceneSeek Wordmark.svg', line: 'Designed the nightlife app end to end: a live venue map and recommendations matched to taste, on iOS, Android, and web.' },
   { name: 'Xvantage Infotech', src: '/LogoWall/Xvanatage Wordmark.svg', line: 'Designed the logo, which is still live, then joined the team as product designer.' },
-  { name: 'The Romanelli Group', src: '/LogoWall/The Romanelli Group Wordmark.png', className: 'logo-romaneli', line: 'Designed the full marketing site for a Keller Williams real estate team. They are still using it.' },
+  { name: 'The Romanelli Group', src: '/LogoWall/The Romanelli Group Wordmark.png', line: 'Designed the full marketing site for a Keller Williams real estate team. They are still using it.' },
   { name: 'Qty AI', src: '/LogoWall/Qty AI Wordmark.svg', line: 'Designed a limited set of SaaS screens. Not a full product.' },
   { name: 'Tulip', src: '/LogoWall/Tulip Wordmark.svg', line: 'Designed the marketing site for a retail customer-engagement platform.' },
   { name: 'SINOBI', src: '/LogoWall/Sinobi Wordmark.svg', line: 'Designed the full site and the Shopify shop for a sustainable footwear brand.' },
   { name: 'VeriKlick', src: '/LogoWall/VeriKlick Wordmark.svg', line: 'Redesigned the brand for an AI interview platform. The work is still live.' },
   { name: 'KLIQTEK', src: '/LogoWall/Kliqtek Wordmark.png', line: 'Redesigned the full marketing site for a Workday partner. The pages are still live.' },
 ]
-const testimonials = [
-  {
-    person: 'Sebastian Janus',
-    role: 'Founder & CEO',
-    company: 'nugrow.de',
-    quote:
-      "Page converts because it's clear. No noise. Rehan didn't redesign—he removed everything that didn't matter. That's it.",
-    clientImage: '/Client Sebastian Janus.png',
-    brandImage: '/CFO Icon.png',
-  },
-  {
-    person: 'Josh Golosinskiy',
-    role: 'CEO',
-    company: 'GRYD.IO',
-    quote:
-      "Rehan got into the product fast. He worked through the protocol complexity, cleaned up the core flows, and made the whole thing easier to use without stripping out the mechanics.",
-    clientImage: '/Client Josh Golosinskiy.png',
-    brandImage: '/GRYD Icon.png',
-  },
-  {
-    person: 'Cristina Romanelli',
-    role: 'Co-founder',
-    company: 'The Romanelli Group',
-    quote:
-      "Rehan doesn't just design websites—he designs experiences. He got what The Romanelli Group is about before he touched Figma. The site doesn't just look premium; it converts. That's the difference between a designer and a partner. 👊🏼",
-    clientImage: '/Client Cristina Romanelli.png',
-    brandImage: '/The Romanelli Group Icon.png',
-  },
-  {
-    person: 'Neil Corke',
-    role: 'Operations Director',
-    company: 'Falk',
-    quote:
-      "Rehan took time to understand Falk before touching the design. He asked the right questions about our customers, our heritage, what actually matters in how we sell. The homepage he delivered is clean and purposeful—every section has a reason. That's exactly what we needed.",
-    clientImage: '/Client Neil Corke.png',
-    brandImage: '/Falk Icon.png',
-  },
-  {
-    person: 'Armand Poonawala',
-    role: 'Founder',
-    company: 'OpenWork',
-    quote:
-      "Rehan got into the product fast. He worked through the protocol complexity, cleaned up the core flows, and made the whole thing easier to use without stripping out the mechanics.",
-    clientImage: '/Client Armand Poonawala.png',
-    brandImage: '/Openwork Icon.png',
-  },
-  {
-    person: 'Shushan Pambukhchyan',
-    role: 'Co-founder & CEO',
-    company: 'SINOBI',
-    quote:
-      "Rehan restructured our entire product page without redesigning it. Like, the layout stayed clean, the aesthetic stayed ours, but suddenly people understood what we were actually selling. That's not common.",
-    clientImage: '/Client Shushan Pambukhchyan.png',
-    brandImage: '/Sinobi Icon.png',
-  },
-]
 
+type Tab = 'testimonials' | 'experience'
 
+function AboutTabs() {
+  const [tab, setTab] = useState<Tab>('testimonials')
+  const tabs: { id: Tab; label: string }[] = [
+    { id: 'testimonials', label: 'Testimonials' },
+    { id: 'experience', label: 'Experience' },
+  ]
 
-function FlipflopButton({
-  href,
-  children,
-  dark = true,
-  className = '',
-  target,
-  rel,
-}: {
-  href: string
-  children: string
-  dark?: boolean
-  className?: string
-  target?: string
-  rel?: string
-}) {
   return (
-    <a
-      href={href}
-      data-text={children}
-      target={target}
-      rel={rel}
-      className={`button-flipflop${dark ? ' is-dark' : ' is-light'}${className ? ` ${className}` : ''}`}
-    >
-      <span className="button-flipflop__container">
-        <span className="button-flipflop__text">{children}</span>
-      </span>
-    </a>
+    <div className="hp-tabs">
+      <div className="hp-tablist" role="tablist" aria-label="About Rehan">
+        {tabs.map((t) => (
+          <button
+            key={t.id}
+            id={`hp-tab-${t.id}`}
+            type="button"
+            role="tab"
+            className="hp-tab"
+            aria-selected={tab === t.id}
+            aria-controls={`hp-panel-${t.id}`}
+            onClick={() => setTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div
+        className="hp-panel"
+        id={`hp-panel-${tab}`}
+        role="tabpanel"
+        aria-labelledby={`hp-tab-${tab}`}
+      >
+        <div className="hp-panel-scroll" data-lenis-prevent>
+          {tab === 'testimonials' &&
+            testimonials.map((t) => (
+              <article className="hp-card" key={t.person}>
+                <img src={t.photo} alt="" />
+                <div className="hp-card-body">
+                  <p>
+                    <b>{t.person}</b> <span className="hp-muted">/ {t.role}</span>
+                  </p>
+                  <p>“{t.quote}”</p>
+                </div>
+              </article>
+            ))}
+
+          {tab === 'experience' &&
+            experience.map((e) => (
+              <article className="hp-card" key={`${e.org}-${e.role}`}>
+                {e.logo ? <img src={e.logo} alt="" /> : <span className="hp-mark">{e.mark}</span>}
+                <div className="hp-card-body">
+                  <div className="hp-card-head">
+                    <p>
+                      <b>{e.org}</b> <span className="hp-muted">/ {e.role}</span>
+                    </p>
+                    <small>{e.dates}</small>
+                  </div>
+                  <p className="hp-muted">{e.line}</p>
+                </div>
+              </article>
+            ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
+function Testimonials() {
+  const [open, setOpen] = useState(0)
 
-
-
-function CaseStudy({ project }: { project: typeof projects[number] }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const delayRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const hovering = useRef(false)
-  const [playing, setPlaying] = useState(false)
-  const [hasVideo, setHasVideo] = useState(Boolean(project.video))
-
-  const clearDelay = () => {
-    if (delayRef.current) {
-      clearTimeout(delayRef.current)
-      delayRef.current = null
-    }
-  }
-
-const start = () => {
-  hovering.current = true
-  if (!hasVideo || !project.video) return
-  clearDelay()
-  delayRef.current = setTimeout(() => {
-    const video = videoRef.current
-    if (!video) return
-    if (!video.src) video.src = project.video
-    const go = () => setPlaying(true)
-    video.play().then(go).catch(() => setHasVideo(false))
-  }, 80)
+  return (
+    <div className="hp-quotes">
+      {testimonials.map((t, i) => (
+        <button
+          key={t.person}
+          type="button"
+          className="hp-quote"
+          aria-expanded={open === i}
+          onClick={() => setOpen(i)}
+        >
+          {open === i && <p>“{t.quote}”</p>}
+          <span className="hp-author">
+            <img src={t.photo} alt="" />
+            <span>
+              <b>{t.person}</b>
+              <small>{t.role}</small>
+            </span>
+            <img className="hp-brand" src={t.brand} alt="" />
+          </span>
+        </button>
+      ))}
+    </div>
+  )
 }
-  const pause = () => {
-    hovering.current = false
-    clearDelay()
-    const video = videoRef.current
-    if (!video) return
-    video.pause()
-    setPlaying(false)
-  }
 
-  const onEnded = () => {
-    const video = videoRef.current
-    if (!video) return
-    video.currentTime = 0
-    if (hovering.current) {
-      video.play().catch(() => { })
-    } else {
-      setPlaying(false)
+function LogoWall() {
+  const [active, setActive] = useState<string | null>(null)
+
+  return (
+    <div className="hp-logos">
+      {logos.map((logo) => (
+        <button
+          key={logo.name}
+          type="button"
+          className="hp-logo"
+          aria-label={logo.name}
+          aria-expanded={active === logo.name}
+          onClick={() => setActive(active === logo.name ? null : logo.name)}
+          onBlur={() => setActive(null)}
+        >
+          <img src={logo.src} alt="" />
+          <span className="hp-logo-tip" role="tooltip">
+            <b>{logo.name}</b>
+            {logo.line}
+          </span>
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function Dock() {
+  const [copied, setCopied] = useState(false)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1500)
+    } catch {
+      window.location.href = `mailto:${EMAIL}`
     }
   }
 
   return (
-    <article className="case">
-      <div
-        className={`case-media${playing ? ' is-playing' : ''}`}
-        onPointerEnter={start}
-        onPointerLeave={pause}
-        onPointerDown={start}
-        onPointerUp={pause}
-        onPointerCancel={pause}
-      >
-        <img
-          className={`case-poster${playing ? ' is-hidden' : ''}`}
-          src={project.image}
-          alt=""
-        />
-
-        {hasVideo && (
-        <video
-  ref={videoRef}
-  className="case-video"
-  muted
-  playsInline
-  preload="none"
-  onPlaying={() => setPlaying(true)}
-  onEnded={onEnded}
-  onError={() => setHasVideo(false)}
-/>
-        )}
-
-        <div className="case-tags">
-          {project.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
-        </div>
-
-<div className="case-stats">
-  {project.stats.map((stat) => (
-    <span className="case-stat" key={stat.text}>
-      <span
-        className="case-stat-icon"
-        style={{ background: stat.bg, color: stat.color }}
-      >
-        <i className={stat.icon} aria-hidden="true" />
-      </span>
-      {stat.text}
-    </span>
-  ))}
-</div>
-    
-      </div>
-
-      <div className="case-layout">
-        <div className="case-brand">
-          <span className="case-logo">
-            <img src={project.logo} alt="" />
-          </span>
-          <span>
-            <b>{project.name}</b>
-            <small>{project.type}</small>
-          </span>
-        </div>
-
-        <div className="case-body">
-          <h3>{project.title}</h3>
-          <p>{project.text}</p>
-        </div>
-
-        <div className="case-quote-col">
-          <div className="case-quote">
-            <p>“{project.quote}”</p>
-            <div className="case-author">
-              {project.personImage ? (
-                <img className="case-avatar" src={project.personImage} alt={project.person} />
-              ) : (
-                <span className="case-avatar" />
-              )}
-              <span>
-                <b>{project.person}</b>
-                <small>{project.role ?? `Founder, ${project.name}`}</small>
-              </span>
-            </div>
-          </div>
-
-          <FlipflopButton className="case-more" href={project.href} target="_blank"
-            rel="noopener noreferrer" dark={false}>Read full case study</FlipflopButton>
-        </div>
-      </div>
-    </article>
+    <div className="hp-dock">
+      <a href={CAL} target="_blank" rel="noreferrer">
+        <img src="/Meet.svg" alt="" />
+        Book a call
+      </a>
+      <button type="button" onClick={copy} aria-live="polite">
+        {copied ? 'Copied' : 'Copy Email'}
+      </button>
+    </div>
   )
 }
 
 export default function Page() {
-  const [openTestimonial, setOpenTestimonial] = useState(0)
-
   return (
-    <main className="portfolio">
-
-      <section className="hero" id="home">
-        <div className="hero-copy">
-         <h1>
- I design products that make <span className="hero-line is-muted">strangers comfortable paying.</span>
-</h1>
-          <div className="hero-actions">
-            <FlipflopButton href="#work">See my work</FlipflopButton>
-            <FlipflopButton href="#contact" dark={false}>Let's talk</FlipflopButton>
+    <main className="portfolio hp">
+      <section className="hp-hero" id="home">
+        <div className="hp-intro">
+          <div className="hp-hello">
+            <img src="/Clay PFP.png" alt="Rehan Pinjari" />
+            <span>Heya! I&apos;m Rehan</span>
           </div>
+
+          <div className="hp-intro-copy">
+            <h1>
+              Product designer with 4 years of experience across{' '}
+              <span className="hp-muted">consumer apps and complex SaaS workflows.</span>
+            </h1>
+            <p>
+              At Xvantage, I designed BookMyFarm, a farmhouse-booking app that now has 100K+ downloads and a
+              4.5★ rating. I worked on its booking and trust experience when it had no established brand or
+              customer reviews.{' '}
+              <span className="hp-muted">Now I&apos;m looking for a full-time role in Bengaluru or remote across India.</span>
+            </p>
+          </div>
+
+          <nav className="hp-socials" aria-label="Elsewhere">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                aria-label={s.label}
+                {...(s.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+              >
+                {s.icon}
+              </a>
+            ))}
+          </nav>
         </div>
 
-        <span className="scroll-note">Scroll to explore</span>
-
-      <aside className="recent-articles">
-  <span className="recent-label">recent<br />article</span>
-  <img className="recent-arrow" src="/arrow.svg" alt="" />
-
-  <a
-    className="recent-card"
-    href="https://medium.muz.li/the-real-difference-between-a-5k-designer-and-a-50k-designer-9ae98214b2ae"
-    target="_blank"
-    rel="noreferrer"
-  >
-    <img src="https://miro.medium.com/v2/resize:fit:144/format:webp/1*erlEVVKY5VBY3Aw0QssHBg.png" alt="" />
-    <b>What Separates $5K<br />From $50K Designers</b>
-  </a>
-
-  <a
-    className="recent-card"
-    href="https://rehanpinjari.medium.com"
-    target="_blank"
-    rel="noreferrer"
-  >
-    <img src="https://miro.medium.com/v2/resize:fit:144/format:webp/1*kO7B7QKjagEFijQVK6s20A.png" alt="" />
-    <b>The System That<br />Ended Free Work</b>
-  </a>
-</aside>
+        <AboutTabs />
       </section>
 
-      <section className="section work-section" id="work">
-        <div className="work-header">
-          <div className="work-kicker">
-            <div className="logo-orbs" aria-hidden="true">
-              <span className="orb"><img src="/BytingKorner Icon.png" alt="" /></span>
-              <span className="orb"><img src="/BookMyFarm Icon.svg" alt="" /></span>
-              <span className="orb"><img src="/Tulip Icon.svg" alt="" /></span>
-              <span className="orb"><img src="/SceneSeek Icon.png" alt="" /></span>
-              <span className="orb"><img src="/VeriKlick Icon.svg" alt="" /></span>
-            </div>
-            <p>Trusted by 40+ Founders</p>
-          </div>
-          <h2>
-           Products I’ve designed.
-{' '}
-            <span>Mobile apps, SaaS platforms and design systems.</span>
-          </h2>
-        </div>
+      <section className="hp-col hp-projects" id="work">
+        <header className="hp-head">
+          <h2>Selected Product Projects</h2>
+          <p>
+            From building trust in a new consumer marketplace to designing complex operational software and
+            AI-assisted legal experiences, these are three products I&apos;ve worked on and the problems I&apos;ve
+            helped solve.
+          </p>
+        </header>
 
-        <div className="case-list">
-          {projects.map((item) => (
-            <CaseStudy project={item} key={item.name} />
-          ))}
-        </div>
-
-<FlipflopButton className="work-cta" href="https://cal.com/hirehan/remote-product-designer" target="_blank" rel="noreferrer">
- Book a 30-min call
-</FlipflopButton>
-
-      </section>
-
-      <section className="section trust-section" id="trust">
-<h2 className="trust-heading">
- Don’t take my word.
-
-  <br />
-  <span>Take theirs.</span>
-</h2>
-
-  <div className="testimonial-list">
-    {testimonials.map((item, index) => {
-      const open = openTestimonial === index
-
-      return (
-        <button
-          key={`${item.person}-${index}`}
-          type="button"
-          className={`testimonial-box${open ? ' is-open' : ''}`}
-          onClick={() => setOpenTestimonial(index)}
-          aria-expanded={open}
-        >
-          <div className="testimonial-content">
-            {open && (
-              <p className="testimonial-text">“{item.quote}”</p>
-            )}
-
-            <div className="testimonial-author">
-              <div className="author-left">
-                <span className="author-photo">
-                  <img
-                    src={item.clientImage}
-                    alt={item.person}
-                  />
+        <div className="hp-project-list">
+          {projects.map((p) => (
+            <article className="hp-project" key={p.name}>
+              <div className="hp-project-brand">
+                <span className={`hp-project-logo${p.darkLogo ? ' is-dark' : ''}`}>
+                  <img src={p.logo} alt="" />
                 </span>
-
                 <span>
-                  <b>{item.person}</b>
-                  <small>
-                    {item.role}, {item.company}
-                  </small>
+                  <b>{p.name}</b>
+                  <small>{p.type}</small>
                 </span>
               </div>
-
-              <span className="author-logo">
-                <img
-                  src={item.brandImage}
-                  alt={item.company}
-                />
-              </span>
-            </div>
-          </div>
-        </button>
-      )
-    })}
-  </div>
-
-  <div className="trust-footer">
-    <p className="trust-more">and more...</p>
-
-    <div className="trust-stats">
-      <p>4 years in product design</p>
-       <p className="trust-medium">
-        16.7K+ followers on
-        <img src="/Medium Logo.svg" alt="Medium" />
-      </p>
-    </div>
-  </div>
-
-<div className="logo-grid">
-  {logos.map((logo) => (
-    <div className="logo-box" key={logo.name}>
-      <img className={logo.className || ''} src={logo.src} alt="" />
-      <span className="logo-tip">
-        <b>{logo.name}</b>
-        <small>{logo.line}</small>
-      </span>
-    </div>
-  ))}
-</div>
-</section>
-
-      <section className="section about-section" id="about">
-        <div className="about-main">
-          <aside className="about-sidebar">
-            <h2>About Rehan</h2>
-
-            <div className="about-profile">
-              <img className="about-pfp" src="/Clay PFP.png" alt="Rehan Pinjari" />
-
-              <dl className="about-meta">
-                <div>
-                  <dt>Name</dt>
-                  <dd>Rehan Pinjari</dd>
-                </div>
-                <div>
-                  <dt>Role</dt>
-                  <dd>Product Designer</dd>
-                </div>
-                <div className="about-availability">
-                  <dt>Availability</dt>
-                  <dd>
-                    <a className="avail-pill" href="https://cal.com/hirehan/remote-product-designer" target="_blank" rel="noreferrer">
-                      Open to full-time roles
-                    </a>
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </aside>
-
-          <div className="about-bio">
-            <div className="about-copy">
-              <p>I stay until what ships matches what I designed.</p>
-              <p>4 years. 100K+ downloads on BookMyFarm.
-                <br />
-4.5★ from 353+ reviews.</p>
-
-              <p>I work directly with founders and engineers, from the first call to developer handoff, and I stay until what ships matches what was designed.</p>
-              <p>I like the work where the constraints are real: no brand yet, a payment gateway with opinions, one system that has to serve three kinds of users. Now I want to go deep on one product with a team that values clarity and execution over flash.</p>
-            </div>
-            <FlipflopButton className="about-more" href="/about">Read more about me</FlipflopButton>
-          </div>
+              <p>{p.text}</p>
+              <a className="hp-media" href={p.href} target="_blank" rel="noreferrer" aria-label={`Read the ${p.name} case study`}>
+                <img src={p.image} alt="" loading="lazy" />
+                <span className="hp-tags">
+                  {p.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </span>
+              </a>
+              <div className="hp-gallery">
+                {p.gallery.map((src) => (
+                  <img key={src} src={src} alt="" loading="lazy" />
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-    
+      <section className="hp-col" id="testimonials">
+        <header className="hp-head">
+          <h2>
+            What founders say
+            <br />
+            about working with me.
+          </h2>
+          <p>Quotes from the people I designed for, used with their permission.</p>
+        </header>
+        <Testimonials />
+      </section>
 
+      <section className="hp-col" id="numbers">
+        <header className="hp-head">
+          <h2>Numbers you can check.</h2>
+          <p>Store figures, my own writing reach and years of work. Company figures aren&apos;t included.</p>
+        </header>
+        <div className="hp-stats">
+          {stats.map((s) => (
+            <div className="hp-stat" key={s.label}>
+              <b>{s.value}</b>
+              <span>{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="hp-col" id="clients">
+        <header className="hp-head">
+          <h2>Teams I&apos;ve designed for.</h2>
+          <p>Marketing sites, brand work and product design. Hover or tap a logo to see what I did.</p>
+        </header>
+        <LogoWall />
+      </section>
+
+      <Dock />
     </main>
   )
 }

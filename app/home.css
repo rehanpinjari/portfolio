@@ -1,40 +1,11 @@
 /* Homepage (Figma: My Portfolio / Desktop - 7).
-   Colours, type and spacing come from the Frost tokens below.
+   Colours, type and spacing use the Frost tokens in app/frost.css.
    Every class is prefixed `hp-` so nothing collides with globals.css. */
 
+/* Tokens (--text-1, --surface-card, …) live in app/frost.css. */
 :root {
-  --ink: #101621;
-  --paper: #fefeff;
-
-  --text-1: var(--ink);
-  --text-3: rgb(16 22 33 / 0.66);
-  --text-inverse: var(--paper);
-  --text-inverse-3: rgb(254 254 255 / 0.66);
-
-  --surface-page: var(--paper);
-  --surface-canvas: #fbfcfd;
-  --surface-card: #eff0f3;
-  --surface-selected: rgb(16 22 33 / 0.09);
-  --surface-inverse: var(--ink);
-  --surface-tag-on-image: rgb(16 22 33 / 0.72);
-  --line: rgb(16 22 33 / 0.14);
-
   --hp-col: 704px;
   --hp-wide: 1200px;
-}
-
-html.dark-mode {
-  --text-1: #f5f5f5;
-  --text-3: rgb(245 245 245 / 0.66);
-  --text-inverse: #111111;
-  --text-inverse-3: rgb(17 17 17 / 0.66);
-
-  --surface-page: #101010;
-  --surface-canvas: #161616;
-  --surface-card: #1c1c1c;
-  --surface-selected: rgb(255 255 255 / 0.1);
-  --surface-inverse: #f5f5f5;
-  --line: rgb(255 255 255 / 0.12);
 }
 
 .hp {
@@ -411,6 +382,22 @@ html.dark-mode {
   color: #fefeff;
   font-size: 14px;
   line-height: 18px;
+}
+
+/* Two supporting shots under each case */
+.hp-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: -16px;
+}
+
+.hp-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--surface-card);
 }
 
 /* ---------- Testimonials ---------- */

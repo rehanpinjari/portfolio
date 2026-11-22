@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Geist, Nanum_Pen_Script } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./frost.css";
 import Nav from "@/components/ui/nav"
 import Footer from "@/components/ui/footer"
 import SiteEffects from '@/components/ui/site-effects'
