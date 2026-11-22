@@ -169,6 +169,8 @@
   flex-direction: column;
   gap: 12px;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-selected) transparent;
 }
 
 .hp-panel::before,
