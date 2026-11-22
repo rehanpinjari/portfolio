@@ -1,0 +1,659 @@
+/* Homepage (Figma: My Portfolio / Desktop - 7).
+   Colours, type and spacing use the Frost tokens in app/frost.css.
+   Every class is prefixed `hp-` so nothing collides with globals.css. */
+
+/* Tokens (--text-1, --surface-card, …) live in app/frost.css. */
+:root {
+  --hp-col: 704px;
+  --hp-wide: 1200px;
+}
+
+.hp {
+  background: var(--surface-page);
+  color: var(--text-1);
+  font-family: var(--font-geist), 'Geist', sans-serif;
+  padding-bottom: 96px;
+}
+
+.hp-muted {
+  color: var(--text-3);
+}
+
+/* ---------- Hero ---------- */
+
+.hp-hero {
+  width: min(var(--hp-wide), calc(100% - 48px));
+  min-height: 100svh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, var(--hp-col)) minmax(0, 384px);
+  justify-content: space-between;
+  align-items: end;
+  gap: 48px;
+  padding: 120px 0 64px;
+}
+
+.hp-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hp-hello {
+  position: relative;
+  width: 362px;
+  height: 94px;
+}
+
+.hp-hello img {
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 68px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.hp-hello span {
+  position: absolute;
+  left: 42px;
+  top: 0;
+  padding: 8px 14px;
+  border-radius: 16px 16px 16px 4px;
+  background: var(--surface-card);
+  color: var(--text-1);
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.hp-intro-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hp-hero h1 {
+  margin: 0;
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-align: left;
+  color: var(--text-1);
+}
+
+.hp-hero p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+}
+
+.hp-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.hp-socials a {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--surface-selected);
+  color: var(--text-3);
+  transition: color 0.15s ease;
+}
+
+.hp-socials a:hover {
+  color: var(--text-1);
+}
+
+.hp-socials svg {
+  height: 16px;
+  width: auto;
+}
+
+/* ---------- About tabs (hero right) ---------- */
+
+.hp-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.hp-tablist {
+  display: flex;
+  gap: 6px;
+}
+
+.hp-tab {
+  height: 36px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-3);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.hp-tab[aria-selected='true'] {
+  background: var(--surface-selected);
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+.hp-tab:focus-visible,
+.hp a:focus-visible,
+.hp button:focus-visible {
+  outline: 2px solid var(--text-1);
+  outline-offset: 2px;
+}
+
+.hp-panel {
+  position: relative;
+  height: 288px;
+}
+
+.hp-panel-scroll {
+  height: 100%;
+  overflow-y: auto;
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-selected) transparent;
+}
+
+.hp-panel::before,
+.hp-panel::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 24px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hp-panel::before {
+  top: 0;
+  background: linear-gradient(var(--surface-page), transparent);
+}
+
+.hp-panel::after {
+  bottom: 0;
+  background: linear-gradient(transparent, var(--surface-page));
+}
+
+.hp-card {
+  display: flex;
+  gap: 16px;
+  padding: 8px;
+  border-radius: 16px;
+  background: var(--surface-canvas);
+}
+
+.hp-card img,
+.hp-card .hp-mark {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.hp-mark {
+  display: grid;
+  place-items: center;
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-weight: 600;
+}
+
+.hp-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.hp-card-body b {
+  font-weight: 600;
+}
+
+.hp-card-body p {
+  margin: 0;
+}
+
+.hp-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hp-card-head small {
+  flex: none;
+  font-size: 14px;
+  color: var(--text-3);
+}
+
+/* ---------- Shared section layout ---------- */
+
+.hp-col {
+  width: min(var(--hp-col), calc(100% - 48px));
+  margin: 128px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hp-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hp-head h2 {
+  margin: 0;
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--text-1);
+}
+
+.hp-head p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 21px;
+  color: var(--text-1);
+}
+
+/* ---------- Projects ---------- */
+
+.hp-projects {
+  margin-top: 256px;
+  gap: 64px;
+}
+
+.hp-project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.hp-project {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hp-project-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hp-project-logo {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--surface-page);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.hp-project-logo.is-dark {
+  background: var(--ink);
+  border: 0;
+}
+
+.hp-project-logo img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.hp-project-brand b {
+  display: block;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.hp-project-brand small {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--text-3);
+}
+
+.hp-project > p {
+  margin: -12px 0 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.hp-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-card);
+}
+
+.hp-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.hp-media:hover img {
+  transform: scale(1.02);
+}
+
+.hp-tags {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.hp-tags span {
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: var(--surface-tag-on-image);
+  color: #fefeff;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+/* Two supporting shots under each case */
+.hp-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: -16px;
+}
+
+.hp-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--surface-card);
+}
+
+/* ---------- Testimonials ---------- */
+
+.hp-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hp-quote {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  border: 0;
+  border-radius: 32px;
+  background: var(--surface-card);
+  color: var(--text-1);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hp-quote p {
+  margin: 0;
+  font-size: 24px;
+  line-height: 31px;
+}
+
+.hp-author {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hp-author img {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--surface-page);
+}
+
+.hp-author img.hp-brand {
+  margin-left: auto;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.hp-author b {
+  display: block;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+}
+
+.hp-author small {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--text-3);
+}
+
+/* ---------- Stats ---------- */
+
+.hp-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.hp-stat {
+  min-height: 144px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 24px;
+  background: var(--surface-card);
+}
+
+.hp-stat b {
+  font-size: 32px;
+  line-height: 42px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hp-stat span {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Logo wall ---------- */
+
+.hp-logos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.hp-logo {
+  position: relative;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0 16px;
+  background: var(--surface-card);
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hp-logo img {
+  max-width: 100%;
+  max-height: 24px;
+  object-fit: contain;
+}
+
+html.dark-mode .hp-logo img {
+  filter: brightness(0) invert(1);
+}
+
+.hp-logo-tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  z-index: 5;
+  width: 240px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-size: 13px;
+  line-height: 18px;
+  text-align: left;
+  transform: translateX(-50%) translateY(4px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.hp-logo-tip b {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.hp-logo:hover .hp-logo-tip,
+.hp-logo:focus-visible .hp-logo-tip,
+.hp-logo[aria-expanded='true'] .hp-logo-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%);
+}
+
+/* ---------- Floating contact bar ---------- */
+
+.hp-dock {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface-card);
+  transform: translateX(-50%);
+}
+
+.hp-dock a,
+.hp-dock button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-1);
+  font: inherit;
+  font-size: 16px;
+  line-height: 23px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hp-dock a {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.hp-dock img {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1100px) {
+  .hp-hero {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    min-height: 0;
+    padding-top: 140px;
+  }
+
+  .hp-tabs {
+    max-width: var(--hp-col);
+  }
+}
+
+@media (max-width: 640px) {
+  .hp-hero h1,
+  .hp-head h2 {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .hp-quote p {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .hp-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hp-logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hp-projects {
+    margin-top: 128px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-media img,
+  .hp-logo-tip {
+    transition: none;
+  }
+}
